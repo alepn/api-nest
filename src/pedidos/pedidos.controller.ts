@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Response } from '@nestjs/common';
+import { Response as Res } from 'express';
 import { PedidosService } from './pedidos.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
@@ -30,5 +31,18 @@ export class PedidosController {
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.pedidosService.remove(id);
+  }
+
+  @Get(':id/report')
+  async report(@Param('id') id: number, @Response() res: Res) {
+    const buffer = await this.pedidosService.report(id)
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'filename=report_pedido_' + id + '.pdf',
+      'Content-Length': buffer.length,
+    })
+
+    res.end(buffer)
   }
 }

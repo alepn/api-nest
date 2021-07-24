@@ -10,9 +10,13 @@ export class ItemPedido {
     @ManyToOne(() => Pedido, pedido => pedido.itensPedido, { onDelete: 'CASCADE' })
     pedido: Pedido;
 
-    @ManyToOne(() => Produto)
+    @ManyToOne(() => Produto, { eager: true })
     produto: Produto;
 
     @Column("decimal", { precision: 10, scale: 4, default: 0.0000 })
     quantidade: number;
+
+    getValorTotal() {
+        return this.produto.valor * this.quantidade;
+    }
 }

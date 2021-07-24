@@ -25,9 +25,17 @@ export class Pedido {
     @Column("varchar", { length: 8 })
     formaPagamento: FormaPagamento;
 
-    @ManyToOne(() => Cliente, cliente => cliente.pedidos)
+    @ManyToOne(() => Cliente, cliente => cliente.pedidos, { eager: true })
     cliente: Cliente;
 
     @OneToMany(() => ItemPedido, itemPedido => itemPedido.pedido, { cascade: true, eager: true })
     itensPedido: ItemPedido[];
+
+    getValorTotal() {
+      let valorTotal = 0;
+      this.itensPedido.forEach(i => {
+        valorTotal += i.produto.valor * i.quantidade;
+      });
+      return valorTotal;
+    }
 }
