@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientesModule } from './clientes/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -19,7 +20,9 @@ import { PedidosModule } from './pedidos/pedidos.module';
       synchronize: true,
     }), 
     ClientesModule, 
-    ProdutosModule, PedidosModule
+    ProdutosModule, 
+    PedidosModule, 
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

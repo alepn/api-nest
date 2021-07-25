@@ -5,12 +5,14 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pedido } from './entities/pedido.entity';
 import * as PDFDocument from 'pdfkit';
+import { MailService } from './../mail/mail.service';
 
 @Injectable()
 export class PedidosService {
   constructor(
     @InjectRepository(Pedido)
     private pedidoRepository: Repository<Pedido>,
+    private mailService: MailService
   ) {}
 
   create(createPedidoDto: CreatePedidoDto) {
@@ -69,5 +71,10 @@ export class PedidosService {
     });
 
     return pdfBuffer;
+  }
+
+  async sendMail(id: number) {
+    const pedido = await this.pedidoRepository.findOne(id);
+    await this.mailService.sendMailPedido(pedido);
   }
 }

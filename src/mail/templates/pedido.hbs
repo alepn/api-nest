@@ -1,0 +1,22 @@
+<h2>Pedido #{{ pedido.id }}</p>
+<br>
+<h3>Dados do cliente:</h3>
+<p><b>Código:</b> {{ pedido.cliente.codigo }}</p>
+<p><b>Nome:</b> {{ pedido.cliente.nome }}</p>
+<br><br>
+<h3>Dados do pedido:</h3>
+<p><b>Código:</b> {{ pedido.codigo }}</p>
+<p><b>Data:</b> {{ pedido.data }}</p>
+<br><br>
+<p><b>Itens do pedido:</b></p>
+<table>
+    {{#each pedido.itensPedido }}
+        <tr>
+            <td>{{ this.produto.nome }}</td>
+            <td>{{ this.quantidade }}</td>
+            <td>R$ 1,00</td>
+        </tr>
+    {{/each}}
+</table>
+<br><br>
+<h2>Valor total: R$ 1,00</h2>

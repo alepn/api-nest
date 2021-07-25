@@ -45,4 +45,10 @@ export class PedidosController {
 
     res.end(buffer)
   }
+
+  @Get(':id/sendmail')
+  async sendMail(@Param('id') id: number, @Response() res: Res) {
+    await this.pedidosService.sendMail(id)
+    res.json({'msg':'Email enviado!'})
+  }
 }
